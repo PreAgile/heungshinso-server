@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "../heungshinso-server/public/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "../heungshinso-server/public/static/js/main.32ef87fa.chunk.js",
+    "main.js.map": "../heungshinso-server/public/static/js/main.32ef87fa.chunk.js.map",
+    "runtime-main.js": "../heungshinso-server/public/static/js/runtime-main.d791a677.js",
+    "runtime-main.js.map": "../heungshinso-server/public/static/js/runtime-main.d791a677.js.map",
+    "static/js/2.7de119f4.chunk.js": "../heungshinso-server/public/static/js/2.7de119f4.chunk.js",
+    "static/js/2.7de119f4.chunk.js.map": "../heungshinso-server/public/static/js/2.7de119f4.chunk.js.map",
+    "static/js/3.f8802608.chunk.js": "../heungshinso-server/public/static/js/3.f8802608.chunk.js",
+    "static/js/3.f8802608.chunk.js.map": "../heungshinso-server/public/static/js/3.f8802608.chunk.js.map",
+    "index.html": "../heungshinso-server/public/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "../heungshinso-server/public/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.7de119f4.chunk.js.LICENSE.txt": "../heungshinso-server/public/static/js/2.7de119f4.chunk.js.LICENSE.txt",
+    "static/media/logo.103b5fa1.svg": "../heungshinso-server/public/static/media/logo.103b5fa1.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d791a677.js",
+    "static/js/2.7de119f4.chunk.js",
+    "static/css/main.8c8b27cf.chunk.css",
+    "static/js/main.32ef87fa.chunk.js"
+  ]
+}
