@@ -38,24 +38,25 @@ module.exports = {
       },
     }).then(async (response) => {
       userData = response.data;
+      const oauth = 'github';
+      const oauth_id = userData.id;
+      const username = userData.name;
       try {
-        await users
-          .findOne({ where: { oauth: 'github', oauth_id: userData.id } })
-          .then((data) => {
-            if (data) {
-              userData = data;
-            } else {
-              users
-                .create({
-                  username: userData.name,
-                  oauth: 'github',
-                  oauth_id: userData.id,
-                })
-                .then((data) => {
-                  userData = data;
-                });
-            }
-          });
+        await users.findOne({ where: { oauth, oauth_id } }).then((data) => {
+          if (data) {
+            userData = data;
+          } else {
+            users
+              .create({
+                username,
+                oauth,
+                oauth_id,
+              })
+              .then((data) => {
+                userData = data;
+              });
+          }
+        });
       } catch (error) {
         console.error(error);
       }

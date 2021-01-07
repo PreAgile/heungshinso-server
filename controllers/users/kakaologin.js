@@ -1,9 +1,10 @@
 require('dotenv').config();
+const users = require('../../models').user;
 const client_id = process.env.KAKAO_CLIENT_ID; //개발자센터에서 발급받은 Client ID
 const client_secret = process.env.KAKAO_CLIENT_SECRET; //개발자센터에서 발급받은 Client Secret
 const axios = require('axios');
 const qs = require('qs');
-const mainUri = 'http://localhost:3000';
+const mainUri = 'https://heungshinso.tk';
 const redirectURI = encodeURI(`${mainUri}/users/signin/kakaologin/callback`);
 let api_url = '';
 let kakaoToken;
@@ -51,14 +52,43 @@ module.exports = {
         Authorization: `Bearer ${kakaoToken['access_token']}`,
       },
     })
-      .then((response) => {
+      .then(async (response) => {
         userData = response.data;
-        res.send(userData);
-        // res.redirect(`https://heungshinso.ml/?kakaologin`);
+        const oauth_id = userData.id;
+        const oauth = 'kakao';
+        const {
+          kakao_account: {
+            profile: { nickname },
+          },
+        } = userData;
+        const {
+          kakao_account: { email },
+        } = userData;
+        try {
+          await users.findOne({ where: { oauth, oauth_id } }).then((data) => {
+            if (data) {
+              userData = data;
+            } else {
+              users
+                .create({
+                  username: nickname,
+                  oauth,
+                  oauth_id,
+                  email,
+                })
+                .then((data) => {
+                  userData = data;
+                });
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+        res.redirect(`https://heungshinso.ml/?kakaologin`);
       })
       .catch((err) => console.log(err));
   },
   returnUser: (req, res) => {
     res.send(userData);
-  }
+  },
 };
