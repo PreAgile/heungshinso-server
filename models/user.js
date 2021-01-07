@@ -1,6 +1,6 @@
-"use strict";
-const crypto = require("crypto");
-const { Model } = require("sequelize");
+'use strict';
+const crypto = require('crypto');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -22,27 +22,30 @@ module.exports = (sequelize, DataTypes) => {
       user_region: DataTypes.STRING,
       user_position: DataTypes.STRING,
       user_status: DataTypes.STRING,
+      oauth: DataTypes.STRING,
+      oauth_id: DataTypes.INTEGER,
+      img: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: "user",
+      modelName: 'user',
     }
   );
   //hook
   //회원가입할때시 비밀번호 해쉬
-  user.addHook("beforeCreate", (data) => {
-    let salt = "random string";
-    let shasum = crypto.createHash("sha1");
+  user.addHook('beforeCreate', (data) => {
+    let salt = 'random string';
+    let shasum = crypto.createHash('sha1');
     shasum.update(data.password + salt);
-    data.password = shasum.digest("hex");
+    data.password = shasum.digest('hex');
   });
   // 회원정보수정시 비밀번호 해쉬
   user.beforeBulkUpdate(async (data) => {
-    let salt = "random string";
-    let shasum = crypto.createHash("sha1");
+    let salt = 'random string';
+    let shasum = crypto.createHash('sha1');
     if (data.attributes.password) {
       await shasum.update(data.attributes.password + salt);
-      data.attributes.password = shasum.digest("hex");
+      data.attributes.password = shasum.digest('hex');
     }
   });
   return user;

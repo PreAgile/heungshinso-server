@@ -3,7 +3,7 @@ const client_id = process.env.KAKAO_CLIENT_ID; //개발자센터에서 발급받
 const client_secret = process.env.KAKAO_CLIENT_SECRET; //개발자센터에서 발급받은 Client Secret
 const axios = require('axios');
 const qs = require('qs');
-const mainUri = 'https://heungshinso.tk';
+const mainUri = 'http://localhost:3000';
 const redirectURI = encodeURI(`${mainUri}/users/signin/kakaologin/callback`);
 let api_url = '';
 let kakaoToken;
@@ -53,8 +53,8 @@ module.exports = {
     })
       .then((response) => {
         userData = response.data;
-        console.log("userData :" + userData);
-        res.redirect(`https://heungshinso.ml/?kakaologin`);
+        res.send(userData);
+        // res.redirect(`https://heungshinso.ml/?kakaologin`);
       })
       .catch((err) => console.log(err));
   },
