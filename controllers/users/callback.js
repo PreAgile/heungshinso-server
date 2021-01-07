@@ -1,9 +1,10 @@
 require('dotenv').config();
 // axios는 HTTP 요청을 하기 위한 라이브러리입니다.
 const axios = require('axios');
-const mainUri = 'https://d2z76t8ifhgwqt.cloudfront.net';
-const redirectUri = 'http://3.35.21.164:3000';
+const mainUri = 'https://heungshinso.ml';
+const redirectUri = 'https://heungshinso.tk';
 // GitHub에 OAuth 앱을 등록한 후, 발급받은 client id 및 secret을 입력합니다.
+//https://ad70141c5b9c.ngrok.io/users/githublogin/intro
 const clientID = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 let accessToken;
@@ -16,6 +17,7 @@ module.exports = {
   },
   get: (req, res) => {
     const requestToken = req.query.code;
+    console.log('requestToken :' + requestToken);
     axios({
       method: 'post',
       url: `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
@@ -24,6 +26,8 @@ module.exports = {
       },
     }).then((response) => {
       accessToken = response.data.access_token;
+      console.log('get User accessToken Intro');
+      console.log('accessToken :' + accessToken);
       res.redirect(`${redirectUri}/users/signin/callback/userinfo`);
     });
   },

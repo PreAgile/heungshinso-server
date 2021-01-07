@@ -3,9 +3,13 @@ const request = require('request');
 const client_id = process.env.NAVER_CLIENT_ID; //개발자센터에서 발급받은 Client ID
 const client_secret = process.env.NAVER_CLIENT_SECRET; //개발자센터에서 발급받은 Client Secret
 let state = '12345'; // random 문자열
-const mainURI = 'https://d2z76t8ifhgwqt.cloudfront.net';
+const mainURI = 'https://heungshinso.ml';
+const reURI = 'https://heungshinso.tk';
+// const redirectURI = encodeURI(
+//   `${reURI}/users/signin/naverlogin/callback`
+// );
 const redirectURI = encodeURI(
-  'http://3.35.21.164:3000/users/signin/naverlogin/callback'
+  `https://heungshinso.ml`
 );
 let api_url = '';
 var token;
@@ -50,7 +54,7 @@ module.exports = {
     request.get(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         token = body;
-        res.redirect(`http://3.35.21.164:3000/users/signin/naverlogin/callback/userinfo`);
+        res.redirect(`${reURI}/users/signin/naverlogin/callback/userinfo`);
       } else {
         res.status(response.statusCode).end();
         console.log('error = ' + response.statusCode);
@@ -67,6 +71,7 @@ module.exports = {
     request.get(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         userData = body;
+        // res.send(userData);
         res.redirect(`${mainURI}/?naverlogin`);
       } else {
         console.log('error');
