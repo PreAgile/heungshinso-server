@@ -1,19 +1,16 @@
 require('dotenv').config();
+const users = require('../../models').user;
 const request = require('request');
 const client_id = process.env.NAVER_CLIENT_ID; //개발자센터에서 발급받은 Client ID
 const client_secret = process.env.NAVER_CLIENT_SECRET; //개발자센터에서 발급받은 Client Secret
 let state = '12345'; // random 문자열
 const mainURI = 'https://heungshinso.ml';
 const reURI = 'https://heungshinso.tk';
-// const redirectURI = encodeURI(
-//   `${reURI}/users/signin/naverlogin/callback`
-// );
-const redirectURI = encodeURI(
-  `https://heungshinso.ml`
-);
+const redirectURI = encodeURI(`${reURI}/users/signin/naverlogin/callback`);
 let api_url = '';
 var token;
 let userData;
+let user;
 module.exports = {
   get: (req, res) => {
     api_url =
@@ -68,10 +65,35 @@ module.exports = {
       url: api_url,
       headers: { Authorization: header },
     };
-    request.get(options, function (error, response, body) {
+    request.get(options, async function (error, response, body) {
       if (!error && response.statusCode == 200) {
         userData = body;
-        // res.send(userData);
+        const {
+          response: { id, name, email },
+        } = JSON.parse(userData);
+        const oauth = 'naver';
+        try {
+          await users
+            .findOne({ where: { oauth, oauth_id: id } })
+            .then((data) => {
+              if (data) {
+                user = data;
+              } else {
+                users
+                  .create({
+                    username: name,
+                    oauth,
+                    oauth_id: id,
+                    email,
+                  })
+                  .then((data) => {
+                    user = data;
+                  });
+              }
+            });
+        } catch (error) {
+          console.error(error);
+        }
         res.redirect(`${mainURI}/?naverlogin`);
       } else {
         console.log('error');
@@ -83,6 +105,6 @@ module.exports = {
     });
   },
   returnUser: (req, res) => {
-    res.send(userData);
+    res.send(user);
   },
 };
