@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       oauth: DataTypes.STRING,
       oauth_id: DataTypes.INTEGER,
       img:  DataTypes.BLOB,
+      prize: DataTypes.STRING,
+      description: DataTypes.STRING,
+      career: DataTypes.STRING,
+      portfolio: DataTypes.STRING,
+      url: DataTypes.STRING,
     },
     {
       sequelize,
