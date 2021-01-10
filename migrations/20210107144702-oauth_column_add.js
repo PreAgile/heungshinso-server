@@ -24,7 +24,7 @@ module.exports = {
         'users',
         'img',
         {
-          type: Sequelize.DataTypes.STRING,
+          type: Sequelize.DataTypes.BLOB,
         },
         { transaction }
       );

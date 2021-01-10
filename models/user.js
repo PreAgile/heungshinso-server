@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       user_status: DataTypes.STRING,
       oauth: DataTypes.STRING,
       oauth_id: DataTypes.INTEGER,
-      img: DataTypes.STRING,
+      img:  DataTypes.BLOB,
     },
     {
       sequelize,

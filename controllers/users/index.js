@@ -3,4 +3,5 @@ module.exports = {
   signout: require("./signout"),
   signup: require("./signup"),
   profile: require("./profile"),
+  uploadImg: require("./uploadImg"),
 };
